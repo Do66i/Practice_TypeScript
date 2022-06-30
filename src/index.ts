@@ -1,3 +1,1 @@
-import { init } from "myPackage";
-
-init();
+console.log("45");
