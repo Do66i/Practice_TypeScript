@@ -9,6 +9,61 @@ showAll: dictionary 의 단어를 모두 프린트함.
 count: dict 단어들의 총 count 를 리턴함.
 */
 
+// type Words = {
+//   [key: string]: string;
+// };
+
+// class Dict {
+//   private words: Words;
+//   constructor() {
+//     this.words = {};
+//   }
+
+//   add(word: Word) {
+//     if (this.words[word.term] === undefined) {
+//       this.words[word.term] = word.def;
+//     }
+//   }
+
+//   def(term: string) {
+//     return this.words[term];
+//   }
+
+//   delete(word: Word) {
+//     if (this.words[word.term]) {
+//       delete this.words[word.term];
+//     }
+//   }
+
+//   update(word: Word, term: string) {
+//     if (this.words[word.term]) {
+//       this.words[term] = word.def;
+//       delete this.words[word.term];
+//     }
+//   }
+//   showAll() {
+//     return console.log(Object.keys(this.words));
+//   }
+
+//   count() {
+//     return console.log(Object.keys(this.words).length);
+//   }
+// }
+
+// class Word {
+//   constructor(public term: string, public def: string) {}
+// }
+
+// const kimchi = new Word("kimchi", "한국음식");
+// const gamja = new Word("gamja", "감자");
+// const goguma = new Word("goguma", "고구마");
+
+// const dict = new Dict();
+
+// dict.add(kimchi);
+// dict.add(gamja);
+// dict.add(goguma);
+
 type Words = {
   [key: string]: string;
 };
@@ -18,48 +73,36 @@ class Dict {
   constructor() {
     this.words = {};
   }
-
-  add(word: Word) {
-    if (this.words[word.term] === undefined) {
-      this.words[word.term] = word.def;
+  add(term: string, definition: string) {
+    if (!this.words[term]) {
+      this.words[term] = definition;
     }
   }
-
-  def(term: string) {
+  get(term: string) {
     return this.words[term];
   }
-
-  delete(word: Word) {
-    if (this.words[word.term]) {
-      delete this.words[word.term];
-    }
+  delete(term: string) {
+    delete this.words[term];
   }
-
-  update(word: Word, term: string) {
-    if (this.words[word.term]) {
-      this.words[term] = word.def;
-      delete this.words[word.term];
+  update(term: string, newDef: string) {
+    if (this.words[term]) {
+      this.words[term] = newDef;
     }
   }
   showAll() {
-    return console.log(Object.keys(this.words));
+    Object.keys(this.words).forEach((term) => console.log(`${term}: ${this.words[term]}`));
   }
-
   count() {
-    return console.log(Object.keys(this.words).length);
+    return Object.keys(this.words).length;
   }
 }
 
-class Word {
-  constructor(public term: string, public def: string) {}
-}
+const dictionary = new Dict();
 
-const kimchi = new Word("kimchi", "한국음식");
-const gamja = new Word("gamja", "감자");
-const goguma = new Word("goguma", "고구마");
-
-const dict = new Dict();
-
-dict.add(kimchi);
-dict.add(gamja);
-dict.add(goguma);
+dictionary.add("김치", "밋있는 한국 음식");
+dictionary.showAll();
+console.log(dictionary.count());
+dictionary.update("김치", "밋있는 한국 음식!!!");
+console.log(dictionary.get("김치"));
+dictionary.delete("김치");
+console.log(dictionary.count());
